@@ -1,7 +1,9 @@
-package by.pvt;
+package by.pvt.service;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import by.pvt.models.UserInfo;
 
 public class UserService {
 
@@ -28,7 +30,7 @@ public class UserService {
 		return null;
 	}
 
-	static UserService getInstance() {
+	public static UserService getInstance() {
 		return instance;
 	}
 

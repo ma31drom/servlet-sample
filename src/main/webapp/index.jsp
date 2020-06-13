@@ -1,5 +1,12 @@
 <!DOCTYPE html>
-<%@page import="by.pvt.UserInfo"%>
+<%@page import="by.pvt.models.UserInfo"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="translations" var="messages" />
+
 <html lang="en" dir="ltr">
 <head>
 <title>Basic 88</title>
@@ -7,6 +14,9 @@
 <link rel="stylesheet" href="styles/layout.css" type="text/css">
 <!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
 </head>
+
+<c:set var="today" scope="page" value="${requestScope.currentDate}" />
+
 <body>
 	<div class="wrapper row1">
 		<header id="header" class="clear">
@@ -16,30 +26,21 @@
 				</h1>
 				<h2>Free HTML5 Website Template</h2>
 			</div>
+
 			<nav>
 				<ul>
-					<jsp:useBean id="userinfo" class="by.pvt.UserInfo"></jsp:useBean>
+					<jsp:useBean id="userinfo" class="by.pvt.models.UserInfo"></jsp:useBean>
 					<jsp:setProperty property="*" name="userinfo" />
 
-					<li>
-						<%
-							UserInfo logged = (UserInfo) session.getAttribute("loggedUser");
-							if (logged == null) {
-								if (session.isNew()) {
-									out.write("Hello first time!");
-								} else {
-									out.write("Anonymous! hello again!");
-								}
-							} else {
-								out.write("Hello " + logged.getUsername() + "!");
-							}
-						%>
 
+
+					<li>Hello <c:out value="${sessionScope.loggedUser}"
+							default="Anonymous" />!
 					</li>
 					<li><a href="#">Text Link</a></li>
 					<li><a href="#">Text Link</a></li>
 					<li><a href="#">Text Link</a></li>
-					<li class="last"><a href="#">Text Link</a></li>
+					<li class="last">Today is <c:out value="${today}" /></li>
 				</ul>
 			</nav>
 		</header>
@@ -49,107 +50,49 @@
 		<div id="container" class="clear">
 			<!-- Slider -->
 			<section id="slider">
-
-				<%
-					if (userinfo.getUsername() != null) {
-						out.write("<a href=\"#\"><img src=\"images/demo/960x360.gif\" alt=\"\"></a>");
-					} else {
-						out.write("<form action=\"in\" method=\"post\">"
-								+ "User Name: <input type=\"text\" name=\"username\"><br>"
-								+ "User Password: <input type=\"password\" name=\"password\"><br>"
-								+ "User Age: <input type=\"text\" name=\"age\"><br> "
-								+ "<input type=\"submit\" value=\"enter\"> </form>");
-					}
-				%>
-
-
-
-
-
-
+				<!--<c:if test="${sessionScope.loggedUser == null}">-->
+				<form action="in" method="post">
+					<fmt:message key="login.username" bundle="${messages}" />
+					: <input type="text" name="username"><br>
+					<fmt:message key="login.password" bundle="${messages}" />
+					: <input type="password" name="password"><br>
+					<fmt:message key="login.age" bundle="${messages}" />
+					: <input type="text" name="age"><br> <input
+						type="submit"
+						value="<fmt:message key="login.submit" bundle="${messages}" />">
+				</form>
+				<!--</c:if>-->
 			</section>
 			<!-- main content -->
 			<div id="homepage">
 				<!-- Services -->
-				<section id="services" class="clear">
-					<article class="one_third">
-						<figure>
-							<img src="images/demo/290x180.gif" width="290" height="180"
-								alt="">
-							<figcaption>
-								<h2>Indonectetus facilis</h2>
-								<p>Nullamlacus dui ipsum conseque loborttis non euisque
-									morbi penas dapibulum orna.</p>
-								<footer class="more">
-									<a href="#">Read More &raquo;</a>
-								</footer>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="one_third">
-						<figure>
-							<img src="images/demo/290x180.gif" width="290" height="180"
-								alt="">
-							<figcaption>
-								<h2>Indonectetus facilis</h2>
-								<p>Nullamlacus dui ipsum conseque loborttis non euisque
-									morbi penas dapibulum orna.</p>
-								<footer class="more">
-									<a href="#">Read More &raquo;</a>
-								</footer>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="one_third lastbox">
-						<figure>
-							<img src="images/demo/290x180.gif" width="290" height="180"
-								alt="">
-							<figcaption>
-								<h2>Indonectetus facilis</h2>
-								<p>Nullamlacus dui ipsum conseque loborttis non euisque
-									morbi penas dapibulum orna.</p>
-								<footer class="more">
-									<a href="#">Read More &raquo;</a>
-								</footer>
-							</figcaption>
-						</figure>
-					</article>
-				</section>
 				<!-- / Services -->
 				<!-- ########################################################################################## -->
 				<!-- ########################################################################################## -->
 				<!-- ########################################################################################## -->
 				<!-- ########################################################################################## -->
 				<!-- Introduction -->
-				<section id="intro" class="last clear">
-					<article>
-						<figure>
-							<img src="images/demo/450x250.gif" width="450" height="250"
-								alt="">
-							<figcaption>
-								<h2>Indonectetus facilis leo nibh</h2>
-								<p>
-									This is a W3C compliant free website template from <a
-										href="https://www.os-templates.com/"
-										title="Free Website Templates">OS Templates</a>. For full
-									terms of use of this template please read our <a
-										href="https://www.os-templates.com/template-terms">website
-										template licence</a>.
-								</p>
-								<p>
-									You can use and modify the template for both personal and
-									commercial use. You must keep all copyright information and
-									credit links in the template and associated files. For more
-									HTML5 templates visit <a href="https://www.os-templates.com/">free
-										website templates</a>.
-								</p>
-								<footer class="more">
-									<a href="#">Read More &raquo;</a>
-								</footer>
-							</figcaption>
-						</figure>
-					</article>
-				</section>
+
+				<c:forEach var="newsRecord" items="${requestScope.news}">
+					<section id="intro" class="last clear">
+						<article>
+							<figure>
+								<img src="${newsRecord.imgUrl}" width="450" height="250" alt="">
+								<figcaption>
+									<h2>${newsRecord.header}</h2>
+									<p>${newsRecord.text}</p>
+									<footer class="more">
+										<a href="#">Read More &raquo;</a>
+									</footer>
+								</figcaption>
+							</figure>
+						</article>
+						<br />
+					</section>
+				</c:forEach>
+
+
+
 				<!-- / Introduction -->
 			</div>
 			<!-- / content body -->

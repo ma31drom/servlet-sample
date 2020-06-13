@@ -1,4 +1,4 @@
-package by.pvt;
+package by.pvt.models;
 
 public class UserInfo {
 
@@ -39,6 +39,11 @@ public class UserInfo {
 
 	public void setAge(String age) {
 		this.age = age;
+	}
+
+	@Override
+	public String toString() {
+		return username;
 	}
 
 }
