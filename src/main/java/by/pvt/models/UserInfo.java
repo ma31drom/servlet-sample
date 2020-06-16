@@ -8,7 +8,9 @@ package by.pvt.models;
 public class UserInfo {
 
 	public UserInfo() {
+		
 		super();
+	
 	}
 
 	public UserInfo(String username, String password, String age) {
