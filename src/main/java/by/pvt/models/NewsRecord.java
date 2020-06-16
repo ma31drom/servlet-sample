@@ -13,7 +13,7 @@ public class NewsRecord {
 	private String header;
 
 	/**
-	 * Entity of news record to store it in database.
+	 * Entity of news record to store it in database. Imitation.
 	 * 
 	 * @author User
 	 *

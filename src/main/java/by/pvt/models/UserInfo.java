@@ -1,5 +1,10 @@
 package by.pvt.models;
 
+/**
+ * 
+ * @author User
+ *
+ */
 public class UserInfo {
 
 	public UserInfo() {
