@@ -8,49 +8,53 @@ package by.pvt.models;
 public class UserInfo {
 
 	public UserInfo() {
-		
 		super();
-	
 	}
 
-	public UserInfo(String username, String password, String age) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.age = age;
+	private Long id;
+	private String name;
+	private Double salary;
+	private String departmentName;
+	private String positionName;
+
+	public Long getId() {
+		return id;
 	}
 
-	String username;
-	String password;
-	String age;
-
-	public String getUsername() {
-		return username;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public String getName() {
+		return name;
 	}
 
-	public String getPassword() {
-		return password;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public Double getSalary() {
+		return salary;
 	}
 
-	public String getAge() {
-		return age;
+	public void setSalary(Double salary) {
+		this.salary = salary;
 	}
 
-	public void setAge(String age) {
-		this.age = age;
+	public String getDepartmentName() {
+		return departmentName;
 	}
 
-	@Override
-	public String toString() {
-		return username;
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+
+	public String getPositionName() {
+		return positionName;
+	}
+
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
 	}
 
 }
