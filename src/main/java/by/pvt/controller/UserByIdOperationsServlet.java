@@ -1,7 +1,6 @@
 package by.pvt.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,12 +22,8 @@ public class UserByIdOperationsServlet extends HttpServlet {
 
 		String parameter = req.getParameter("id");
 		Long valueOf = Long.valueOf(parameter);
-		try {
-			resp.getWriter()
-					.write(new ObjectMapper().writeValueAsString(UserRepository.getInstance().getUserById(valueOf)));
-		} catch (SQLException e) {
-			throw new IOException(e);
-		}
+		resp.getWriter()
+				.write(new ObjectMapper().writeValueAsString(UserRepository.getInstance().getUserById(valueOf)));
 	}
 
 	@Override
@@ -37,29 +32,21 @@ public class UserByIdOperationsServlet extends HttpServlet {
 
 		String parameter = req.getParameter("id");
 		Long valueOf = Long.valueOf(parameter);
-		try {
-			boolean deleteUserById = UserRepository.getInstance().deleteUserById(valueOf);
+		boolean deleteUserById = UserRepository.getInstance().deleteUserById(valueOf);
 
-			resp.getWriter().write("User was deleted of not? Result of operation is:" + deleteUserById);
-		} catch (SQLException e) {
-			throw new IOException(e);
-		}
+		resp.getWriter().write("User was deleted of not? Result of operation is:" + deleteUserById);
+
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String parameter = req.getParameter("id");
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		UserInfo readValue = objectMapper.readValue(req.getInputStream(), UserInfo.class);
 
-		try {
-			UserInfo createUser = UserRepository.getInstance().createUser(readValue);
+		UserInfo createUser = UserRepository.getInstance().createUser(readValue);
 
-			resp.getWriter().write(objectMapper.writeValueAsString(createUser));
-		} catch (SQLException e) {
-			throw new IOException(e);
-		}
+		resp.getWriter().write(objectMapper.writeValueAsString(createUser));
 	}
 
 }

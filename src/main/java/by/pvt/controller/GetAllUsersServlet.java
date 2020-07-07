@@ -20,13 +20,7 @@ public class GetAllUsersServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 
-		try {
-			resp.getWriter()
-			.write(new ObjectMapper()
-					.writeValueAsString(UserRepository.getInstance().getAllUsers()));
-		} catch (SQLException e) {
-			throw new IOException(e);
-		}
+		resp.getWriter().write(new ObjectMapper().writeValueAsString(UserRepository.getInstance().getAllUsers()));
 	}
 
 }
