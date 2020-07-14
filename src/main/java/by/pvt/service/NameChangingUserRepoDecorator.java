@@ -3,6 +3,8 @@ package by.pvt.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Repository;
+
 import by.pvt.models.UserInfo;
 
 public class NameChangingUserRepoDecorator implements IUserRepository {
@@ -36,6 +38,16 @@ public class NameChangingUserRepoDecorator implements IUserRepository {
 	@Override
 	public UserInfo createUser(UserInfo readValue) {
 		return realRepo.createUser(readValue);
+	}
+
+	@Override
+	public UserInfo updateUser(UserInfo user) {
+		return realRepo.createUser(user);
+	}
+
+	@Override
+	public UserInfo getUEmployeeById(Long id) {
+		return realRepo.getUEmployeeById(id);
 	}
 
 }

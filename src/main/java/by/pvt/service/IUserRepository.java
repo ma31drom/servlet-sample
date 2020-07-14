@@ -13,4 +13,8 @@ public interface IUserRepository {
 	boolean deleteUserById(Long id);
 
 	UserInfo createUser(UserInfo readValue);
+
+	UserInfo updateUser(UserInfo user);
+	
+	UserInfo getUEmployeeById(Long id);
 }

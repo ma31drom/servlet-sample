@@ -1,19 +1,28 @@
 package by.pvt.models;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Formula;
 
 /**
  * 
  * @author User
  *
  */
+
 @Entity
-@Table(name = "USER_INFO")
+@Table(name = "userinfo")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class UserInfo {
 
 	public UserInfo() {
@@ -27,14 +36,31 @@ public class UserInfo {
 	@Column(name = "U_NAME")
 	private String name;
 
-	@Column(name = "SALARY")
+	@Access(AccessType.PROPERTY)
+	@Column(name = "SALARY", insertable = true, updatable = false)
 	private Double salary;
 
-	@Column(name = "DEPARTMENT")
-	private String departmentName;
+	@Formula(value = "concat(coalesce(POSITION, ''), coalesce(DEPARTMENT, ''))")
+	private String employeeInfo;
 
-	@Column(name = "POSITION")
-	private String positionName;
+	@Embedded
+	private Address address;
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public String getEmployeeInfo() {
+		return employeeInfo;
+	}
+
+	public void setEmployeeInfo(String employeeInfo) {
+		this.employeeInfo = employeeInfo;
+	}
 
 	public Long getId() {
 		return id;
@@ -53,27 +79,11 @@ public class UserInfo {
 	}
 
 	public Double getSalary() {
-		return salary;
+		return 1000 * salary;
 	}
 
 	public void setSalary(Double salary) {
 		this.salary = salary;
-	}
-
-	public String getDepartmentName() {
-		return departmentName;
-	}
-
-	public void setDepartmentName(String departmentName) {
-		this.departmentName = departmentName;
-	}
-
-	public String getPositionName() {
-		return positionName;
-	}
-
-	public void setPositionName(String positionName) {
-		this.positionName = positionName;
 	}
 
 }

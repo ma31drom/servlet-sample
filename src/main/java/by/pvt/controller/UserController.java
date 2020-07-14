@@ -4,9 +4,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,13 +35,23 @@ public class UserController {
 		return repo.getUserById(id);
 	}
 
+	@GetMapping(path = "/empl")
+	public UserInfo getemployeeById(@RequestParam Long id) throws SQLException {
+		return repo.getUEmployeeById(id);
+	}
+	
 	@DeleteMapping
 	public boolean deleteUserById(@RequestParam Long id) throws SQLException {
 		return repo.deleteUserById(id);
 	}
 
-	@PostMapping
+	@PostMapping(consumes= MediaType.APPLICATION_JSON_VALUE)
 	public UserInfo saveUser(@RequestBody UserInfo user) throws SQLException {
 		return repo.createUser(user);
+	}
+	
+	@PutMapping(consumes= MediaType.APPLICATION_JSON_VALUE)
+	public UserInfo updateUser(@RequestBody UserInfo user) throws SQLException {
+		return repo.updateUser(user);
 	}
 }
