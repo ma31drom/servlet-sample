@@ -12,9 +12,16 @@ public interface IUserRepository {
 
 	boolean deleteUserById(Long id);
 
+	List<UserInfo> getByNamePaternAndSalaryMoreThen(String namePattern, Double salaryLimit);
+
+	List<UserInfo> getByStringIn2Fields(String filter);
+	
 	UserInfo createUser(UserInfo readValue);
 
 	UserInfo updateUser(UserInfo user);
+
+	String mediumSalary();
 	
-	UserInfo getUEmployeeById(Long id);
+	UserInfo getUserByPhoneNumber(String phone);
+	
 }
