@@ -25,11 +25,17 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 /**
  * 
@@ -38,6 +44,9 @@ import org.hibernate.annotations.Formula;
  */
 
 @Entity
+@DynamicUpdate
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 @Table(name = "userinfo")
 public class UserInfo {
 
@@ -54,11 +63,14 @@ public class UserInfo {
 
 	@Column(name = "l_NAME")
 	private String lname;
-	
+
 	@Access(AccessType.PROPERTY)
 	@Column(name = "SALARY", insertable = true, updatable = false)
 	private Double salary;
 
+	@Version
+	private Long version;
+	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private Address address;
@@ -73,6 +85,14 @@ public class UserInfo {
 	@Fetch(FetchMode.JOIN)
 	@JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "skill_id"))
 	private Set<Skill> skills;
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
 
 	public Set<Skill> getSkills() {
 		return skills;

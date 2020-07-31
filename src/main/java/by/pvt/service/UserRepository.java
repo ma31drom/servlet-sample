@@ -13,6 +13,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
+
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import by.pvt.models.Skill;
@@ -45,10 +49,13 @@ public class UserRepository implements IUserRepository {
 		return true;
 	}
 
-	@org.springframework.transaction.annotation.Transactional
+	@org.springframework.transaction.annotation.Transactional(isolation = Isolation.READ_UNCOMMITTED)
 	public UserInfo createUser(UserInfo readValue) {
 		enrichWithDBObjects(readValue);
+
 		entityManager.persist(readValue);
+		entityManager.flush();
+
 		return readValue;
 	}
 
@@ -74,6 +81,7 @@ public class UserRepository implements IUserRepository {
 	}
 
 	@Override
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
 	public UserInfo updateUser(UserInfo user) {
 		UserInfo find = entityManager.find(UserInfo.class, user.getId());
 		find.setName(user.getName());
